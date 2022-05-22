@@ -26,4 +26,21 @@ contract('TasksContract', () => {
     assert.equal(taskCounter, 1)
   })
 
+  it('task created successfully', async () => {
+    const res = await this.tasksContract.createTask('some task', 'some description')
+    assert.equal(res.logs[0].args.id.toNumber(), 1)
+    assert.equal(res.logs[0].args.title, 'some task')
+    assert.equal(res.logs[0].args.description, 'some description')
+    assert.equal(res.logs[0].args.done, false)
+
+    const taskCounter = await this.tasksContract.taskCounter()
+    assert.equal(taskCounter, 2)
+  })
+
+  it('task done toggled successfully', async () => {
+    const res = await this.tasksContract.toggleDone(0)
+    assert.equal(res.logs[0].args.id.toNumber(), 0)
+    assert.equal(res.logs[0].args.done, true)
+  })
+
 })
