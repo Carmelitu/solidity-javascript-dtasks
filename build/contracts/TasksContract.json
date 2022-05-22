@@ -73,7 +73,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -112,7 +113,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -7641,15 +7643,35 @@
           ],
           "name": "TaskCreated",
           "type": "event"
+        },
+        "0x389dee00d487dd41dd5bf0f43eeaa5b663b3af022d52368df89d388150295f45": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "bool",
+              "name": "done",
+              "type": "bool"
+            }
+          ],
+          "name": "TaskToggleDone",
+          "type": "event"
         }
       },
       "links": {},
-      "address": "0x4496C9F3333C9a3086305f62fCF799EDED819232",
-      "transactionHash": "0xc76b0544cee8791f089233f52218c08e3768d0c0fbe4dbd2e7d44c61c021f148"
+      "address": "0x602d957623BB8BB3290bd85942e9fFF9b4a0Ecd0",
+      "transactionHash": "0x1069d8de10a9f9b7d757c5fca66fff7f6828c1ed437214c9c78e3628d908c79f"
     }
   },
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-05-22T00:25:20.567Z",
+  "updatedAt": "2022-05-22T02:56:08.956Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
