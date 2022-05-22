@@ -1,5 +1,7 @@
 const App = {
 
+  contracts: {},
+
   web3Provider: '',
 
   init: () => {
@@ -22,9 +24,12 @@ const App = {
   loadContracts: async () => {
     const res = await fetch("TasksContract.json")
     const tasksContractJSON = await res.json()
-    console.log(tasksContractJSON)
-  }
+    
+    App.contracts.tasksContract = TruffleContract(tasksContractJSON)
 
+    App.contracts.tasksContract.setProvider(App.web3Provider)
+    App.taskContract = await App.contracts.tasksContract.deployed()
+  }
 }
 
 App.init()
