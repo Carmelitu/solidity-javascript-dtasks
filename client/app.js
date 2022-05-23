@@ -5,8 +5,8 @@ const App = {
   web3Provider: '',
 
   init: () => {
-    console.log('Loaded')
     App.loadEthereum()
+    App.loadWallet()
     App.loadContracts()
   },
 
@@ -20,6 +20,11 @@ const App = {
       console.log('Ethereum browser is not installed. Try installing MetaMask.')
     }
   },
+  
+  loadWallet: async () => {
+    const wallet = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    App.wallet = wallet[0]
+  },
 
   loadContracts: async () => {
     const res = await fetch("TasksContract.json")
@@ -28,7 +33,12 @@ const App = {
     App.contracts.tasksContract = TruffleContract(tasksContractJSON)
 
     App.contracts.tasksContract.setProvider(App.web3Provider)
-    App.taskContract = await App.contracts.tasksContract.deployed()
+    App.tasksContract = await App.contracts.tasksContract.deployed()
+  },
+
+  createTask: async (title, description) => {
+    const res = await App.tasksContract.createTask(title, description, { from: App.wallet })
+    console.log(res.logs[0]?.args)
   }
 }
 
