@@ -4,10 +4,12 @@ const App = {
 
   web3Provider: '',
 
-  init: () => {
-    App.loadEthereum()
-    App.loadWallet()
-    App.loadContracts()
+  init: async () => {
+    await App.loadEthereum()
+    await App.loadWallet()
+    await App.loadContracts()
+    App.renderWallet()
+    await App.renderTasks()
   },
 
   loadEthereum: async () => {
@@ -36,9 +38,50 @@ const App = {
     App.tasksContract = await App.contracts.tasksContract.deployed()
   },
 
+  renderWallet: async () => {
+    document.getElementById('wallet').innerText = App.wallet
+  },
+
+  renderTasks: async () => {
+    let taskCounter = await App.tasksContract.taskCounter()
+    taskCounter = taskCounter.toNumber()
+
+    let html = ''
+
+    for (let i = 0; i < taskCounter; i++) {
+      const task = await App.tasksContract.tasks(i)
+      const { title, description, done, createdAt } = task
+
+      let taskElement = `
+        <div class="card bg-dark rounded-0 mb-2">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span>${title}</span>
+            <div class="form-check form-switch">
+              <input class="form-check-input" data-id="${i}" type="checkbox" ${done ? 'checked' : ''}
+                    onchange="App.toggleDone(this)" />
+            </div>
+          </div>
+          <div class="card-body">
+            <span>${description}</span>
+            <p class="text-muted">Task was created ${new Date(createdAt * 1000).toLocaleString()}</p>
+          </div>
+        </div>
+      `
+      html += taskElement
+    }
+
+    document.querySelector('#task-list').innerHTML = html
+  },
+
   createTask: async (title, description) => {
     const res = await App.tasksContract.createTask(title, description, { from: App.wallet })
     console.log(res.logs[0]?.args)
+    await App.renderTasks()
+  },
+
+  toggleDone: async (element) => {
+    const res = await App.tasksContract.toggleDone(element.dataset.id, { from: App.wallet })
+    await App.renderTasks()
   }
 }
 
