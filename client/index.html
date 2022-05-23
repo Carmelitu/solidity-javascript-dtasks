@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/main.css">
+  <!-- Google icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>DAPP Tasks</title>
 </head>
 <body>
@@ -13,11 +15,17 @@
     <div class="row">
       <div class="col-md-4">
 
-        <div class="card card-body rounded-0 mb-4 bg-dark">
-          <h1>DApp</h1>
-          <h6 class="text-muted">Decentralized Task App</h6>
-          <span>Wallet</span>
-          <span id="wallet"></span>
+        <div class="card card-body bg-dark rounded-0 mb-4">
+          <h1>
+            <span class="material-icons"> grid_view </span>
+            DApp
+          </h1>
+          <h6 class="text-muted">Decentralize Tasks App</h6>
+          <div class="d-flex align-items-center">
+            <span class="material-icons"> account_balance_wallet </span>
+            <span class="ms-2">Wallet</span>
+          </div>
+          <span id="account"></span>
         </div>
 
         <form class="card card-body rounded-0 bg-dark" id="task-form">
